@@ -123,8 +123,6 @@ export const protectRoute = CatchAsync(
 
 export const restrictTo = (...roles: string[]) => {
   return (req: NewRequest, res: Response, next: NextFunction) => {
-    console.log(roles, req.user as any);
-
     if (!roles.includes(req?.user?.role as string)) {
       return next(
         new AppError("You do not have permission to perform this action!", 403)
