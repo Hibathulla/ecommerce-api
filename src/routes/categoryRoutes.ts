@@ -4,6 +4,7 @@ import {
   deleteCategory,
   editCategory,
   getAllCategory,
+  getCategory,
 } from "../controllers/categoryController";
 import { protectRoute, restrictTo } from "../controllers/authController";
 import { upload } from "../utils/multer";
@@ -16,6 +17,7 @@ router.route("/").get(getAllCategory).post(restrictTo("admin"), createCategory);
 
 router
   .route("/:id")
+  .get(getCategory)
   .patch(restrictTo("admin"), editCategory)
   .delete(restrictTo("admin"), deleteCategory);
 

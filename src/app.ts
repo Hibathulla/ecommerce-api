@@ -14,11 +14,13 @@ import imageRouter from "./routes/imageRoutes";
 import userRouter from "./routes/userRoutes";
 import sizeRouter from "./routes/sizeRoutes";
 import couponRouter from "./routes/couponRoutes";
+import locationRouter from "./routes/locationRoutes";
 import { sharpImage, uploadImage } from "./controllers/imageController";
 import { upload } from "./utils/multer";
 dotenv.config();
 export const app = express();
 
+app.use(cors());
 app.use(express.json({ limit: "10kb" }));
 app.use(express.static("public"));
 app.use(ExpressMongoSanitize());
@@ -46,14 +48,14 @@ app.get("/hi", (req, res) => {
 });
 
 const limiter = rateLimit({
-  max: 100,
+  max: 200,
   windowMs: 60 * 60 * 1000,
   message: "Too many requests. Please try again later",
 });
 
 //security
 app.use("/api", helmet());
-app.use("/api", limiter);
+// app.use("/api", limiter);
 
 app.use("/api/users", userRouter);
 app.use("/api/product", productRouter);
@@ -61,6 +63,7 @@ app.use("/api/category", categoryRouter);
 app.use("/api/size", sizeRouter);
 app.use("/api/coupon", couponRouter);
 app.use("/api/image", imageRouter);
+app.use("/api/location", locationRouter);
 
 app.use(GlobalError);
 // app.get("/", (req: Request, res: Response) => {

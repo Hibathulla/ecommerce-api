@@ -68,7 +68,7 @@ export const login = CatchAsync(
       return next(new AppError("Invalid email or password", 400));
     }
 
-    generateToken(res, user);
+    generateToken(res, user, "Successfully logged in");
   }
 );
 

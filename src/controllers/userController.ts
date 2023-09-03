@@ -46,6 +46,7 @@ export const updateLoggedUser = CatchAsync(
 
     res.status(200).json({
       status: "success",
+      message: "User updated successfully",
       data: {
         user: updatedUser,
       },
@@ -55,6 +56,8 @@ export const updateLoggedUser = CatchAsync(
 
 export const getMe = (req: NewRequest, res: Response, next: NextFunction) => {
   req.params.id = req.user!._id;
+  console.log(req.params.id, "param");
+  console.log(req.user!._id, "id");
 
   next();
 };

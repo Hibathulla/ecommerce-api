@@ -11,5 +11,6 @@ export interface productType {
   category: categoryType;
   size: sizeType;
   isFeatured?: boolean;
+  outOfStock?: boolean;
   description?: string;
 }

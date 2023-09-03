@@ -5,23 +5,56 @@ import sharp from "sharp";
 import { AppError } from "../utils/AppError";
 import fs from "fs";
 
-export const sharpImage = (
-  req: NewRequest,
-  res: Response,
-  next: NextFunction
-) => {
-  if (!req.file) return next(new AppError("Please upload an image", 400));
-  if (!req.body.type) return next(new AppError("Please enter image type", 400));
+export const sharpImage = CatchAsync(
+  async (req: NewRequest, res: Response, next: NextFunction) => {
+    if (!req.file) return next(new AppError("Please upload an image", 400));
+    if (!req.body.type)
+      return next(new AppError("Please enter image type", 400));
 
-  req.file.filename = `${req.body.type}-${req.user?._id}-${Date.now()}.jpeg`;
+    req.file.filename = `${req.body.type}-${Date.now()}.jpeg`;
 
-  sharp(req.file.buffer)
-    .toFormat("jpeg")
-    .jpeg({ quality: 90 })
-    .toFile(`public/img/${req.body.type}/${req.file.filename}`);
+    await sharp(req.file.buffer)
+      .resize(2000, 1333)
+      .toFormat("jpeg")
+      .jpeg({ quality: 90 })
+      .toFile(`public/img/${req.body.type}/${req.file.filename}`);
 
-  next();
-};
+    next();
+  }
+);
+
+export const sharpMultiImages = CatchAsync(
+  async (req: NewRequest, res: Response, next: NextFunction) => {
+    // console.log(req.files, "file");
+
+    if (!req.files || req.files.length == 0)
+      return next(new AppError("Please upload atleast one image!", 400));
+    if (!req.body.type)
+      return next(new AppError("Please enter image type", 400));
+
+    let images: string[] = [];
+
+    await Promise.all(
+      (req as any).files!.map(async (file, index) => {
+        //* here async is for callback function. So the below code will not await or wait for the next to call
+        //* So, next() will call without waiting this async await
+        const filename = `product-${Date.now()}-${index + 1}.jpeg`;
+        console.log(file, "file test");
+
+        await sharp(file?.buffer)
+          .resize(750, 500)
+          .toFormat("jpeg")
+          .jpeg({ quality: 90 })
+          .toFile(`public/img/${req.body.type}/${filename}`);
+
+        images.push(filename);
+      })
+    );
+
+    req.body.image = images;
+    next();
+  }
+);
 
 export const uploadImage = CatchAsync(
   async (req: NewRequest, res: Response, next: NextFunction) => {
@@ -31,6 +64,16 @@ export const uploadImage = CatchAsync(
       status: "success",
       message: "Image uploaded successfully",
       data: req.file?.filename,
+    });
+  }
+);
+
+export const uploadMultipleImages = CatchAsync(
+  async (req: NewRequest, res: Response, next: NextFunction) => {
+    res.status(201).json({
+      status: "success",
+      message: "Image uploaded successfully",
+      data: req.body.image,
     });
   }
 );

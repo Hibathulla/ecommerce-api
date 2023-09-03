@@ -55,10 +55,15 @@ export const UpdateOne = (Model: Model<any>, type: string) =>
     });
   });
 
-export const CreateOne = (Model: Model<any>, type: string) =>
+export const CreateOne = (
+  Model: Model<any>,
+  type: string,
+  popOptions?: { path: string; select?: string }
+) =>
   CatchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    const doc = await Model.create(req.body);
-
+    let doc = await Model.create(req.body);
+    if (popOptions) doc = await doc.populate(popOptions);
+    // doc.populate("size category");
     // if (!doc) {
     //   return next(new AppError("No current doc found with this id", 404));
     // }
@@ -80,7 +85,7 @@ export const GetOne = (
   CatchAsync(async (req: Request, res: Response, next: NextFunction) => {
     let query = Model.findById(req.params.id);
 
-    if (popOptions) query = query.populate(popOptions);
+    // if (popOptions) query = query.populate(popOptions);
 
     const doc = await query;
 

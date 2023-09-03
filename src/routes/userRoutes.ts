@@ -21,14 +21,15 @@ router.post("/signUp", signUp);
 router.post("/login", login);
 
 router.use(protectRoute);
+router.patch("/updateMe", updateLoggedUser);
+router.route("/me").get(getMe, getUser);
 
 router.route("/").get(restrictTo("admin"), getAllUsers);
-router.route("/:id").patch(restrictTo("admin"), UpdateUser);
+router
+  .route("/:id")
+  .get(restrictTo("admin"), getUser)
+  .patch(restrictTo("admin"), UpdateUser);
 
 router.route("/updatePassword").post(restrictTo("user"), updatePassword);
-
-router.patch("/updateMe", updateLoggedUser);
-
-router.get("/me", getMe, getUser);
 
 export default router;

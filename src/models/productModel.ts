@@ -15,7 +15,6 @@ const productSchema = new mongoose.Schema<productType>(
     },
     discountPrice: {
       type: Number,
-      required: [true, "A product must have a price"],
       validate: {
         message: "Discount price {VALUE} should be less than actual price",
         validator: function (val) {
@@ -39,6 +38,7 @@ const productSchema = new mongoose.Schema<productType>(
       },
     ],
     isFeatured: Boolean,
+    outOfStock: Boolean,
     createdAt: {
       type: Date,
       default: Date.now(),
@@ -53,6 +53,14 @@ const productSchema = new mongoose.Schema<productType>(
 productSchema?.pre("save", function (next) {
   this.slug = slugify(this?.name, { lower: true, trim: true });
 
+  next();
+});
+
+productSchema?.pre(/^find/, function (next) {
+  (this as any).populate({
+    path: "size category",
+    select: "category billboard billboardLabel name value",
+  });
   next();
 });
 
