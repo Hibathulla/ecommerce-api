@@ -15,12 +15,14 @@ const productSchema = new mongoose.Schema<productType>(
     },
     discountPrice: {
       type: Number,
-      validate: {
-        message: "Discount price {VALUE} should be less than actual price",
-        validator: function (val) {
-          return val < (this as any).price;
-        },
-      },
+      // validate: {
+      //   validator: function (val) {
+      //     // console.log(val, pr, "val");
+
+      //     return val < (this as any).price;
+      //   },
+      //   message: "Discount price {VALUE} should be less than actual price",
+      // },
     },
     description: {
       type: String,
@@ -49,6 +51,20 @@ const productSchema = new mongoose.Schema<productType>(
     toObject: { virtuals: true },
   }
 );
+
+// productSchema.pre("validate", function (next) {
+//   if (this.discountPrice! > this.price) {
+//     this.invalidate(
+//       "discountPrice",
+//       `Discount price ${this.discountPrice!} should be less than actual price ${
+//         this.price
+//       }`,
+//       this.price
+//     );
+//   }
+
+//   next();
+// });
 
 productSchema?.pre("save", function (next) {
   this.slug = slugify(this?.name, { lower: true, trim: true });

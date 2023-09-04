@@ -30,10 +30,16 @@ export const updateLoggedUser = CatchAsync(
       );
     }
 
-    //* can only edit name and email
-    const filteredBody = filterObj(req.body, "name", "email");
+    // if (req.body.photo) {
+    //   return next(
+    //     new AppError("You cannot update password with this route", 400)
+    //   );
+    // }
 
-    req.body = filteredBody;
+    //* can only edit name and email
+    const filteredBody = filterObj(req.body, "name", "email", "photo");
+
+    // console.log(filteredBody, "filtered");
 
     const updatedUser = await User.findByIdAndUpdate(
       req.user!._id,

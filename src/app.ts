@@ -15,8 +15,7 @@ import userRouter from "./routes/userRoutes";
 import sizeRouter from "./routes/sizeRoutes";
 import couponRouter from "./routes/couponRoutes";
 import locationRouter from "./routes/locationRoutes";
-import { sharpImage, uploadImage } from "./controllers/imageController";
-import { upload } from "./utils/multer";
+import settingsRouter from "./routes/settingsRoutes";
 dotenv.config();
 export const app = express();
 
@@ -64,6 +63,7 @@ app.use("/api/size", sizeRouter);
 app.use("/api/coupon", couponRouter);
 app.use("/api/image", imageRouter);
 app.use("/api/location", locationRouter);
+app.use("/api/settings", settingsRouter);
 
 app.use(GlobalError);
 // app.get("/", (req: Request, res: Response) => {
