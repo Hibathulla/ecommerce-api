@@ -3,13 +3,17 @@ import { protectRoute, restrictTo } from "../controllers/authController";
 import { upload } from "../utils/multer";
 import {
   createSettingsDetail,
+  getAllSettings,
   getSettingsDetail,
   updateSettingsDetail,
 } from "../controllers/settingsController";
 
 const router = express();
 
-router.route("/").post(protectRoute, restrictTo("admin"), createSettingsDetail);
+router
+  .route("/")
+  .get(getAllSettings)
+  .post(protectRoute, restrictTo("admin"), createSettingsDetail);
 
 router
   .route("/:id")

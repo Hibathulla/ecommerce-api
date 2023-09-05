@@ -17,7 +17,7 @@ import {
 
 const router = express.Router();
 
-router.post("/signUp", signUp);
+router.post("/register", signUp);
 router.post("/login", login);
 
 router.use(protectRoute);
