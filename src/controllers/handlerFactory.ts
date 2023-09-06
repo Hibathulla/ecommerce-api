@@ -105,7 +105,11 @@ export const GetAll = (Model: Model<any>, type: string, searchKey?: string) =>
   CatchAsync(async (req: Request, res: Response, next: NextFunction) => {
     let filter = {};
 
-    if (req.params.tourId) filter = { tour: req.params.tourId };
+    if (req.params.productId) filter = { product: req.params.productId };
+    if (req.query.category)
+      filter = { ["category.category"]: req.query.category };
+
+    console.log(filter, "filt");
 
     let features = new APIFeatures(Model.find(filter), req.query, searchKey)
       .search()

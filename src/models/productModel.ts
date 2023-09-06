@@ -66,9 +66,13 @@ const productSchema = new mongoose.Schema<productType>(
 //   next();
 // });
 
+//virtual properties
+productSchema.virtual("categoryName").get(function () {
+  return this.category!?.category;
+});
+
 productSchema?.pre("save", function (next) {
   this.slug = slugify(this?.name, { lower: true, trim: true });
-
   next();
 });
 
@@ -77,6 +81,11 @@ productSchema?.pre(/^find/, function (next) {
     path: "size category",
     select: "category billboard billboardLabel name value",
   });
+  next();
+});
+
+productSchema?.pre(/^find/, function (next) {
+  console.log((this as any).category, "cat");
   next();
 });
 
