@@ -45,6 +45,7 @@ const productSchema = new mongoose.Schema<productType>(
       type: Date,
       default: Date.now(),
     },
+    categoryName: String,
   },
   {
     toJSON: { virtuals: true },
@@ -66,9 +67,10 @@ const productSchema = new mongoose.Schema<productType>(
 //   next();
 // });
 
-//virtual properties
-productSchema.virtual("categoryName").get(function () {
-  return this.category!?.category;
+// virtual properties
+productSchema.pre("save", function (next) {
+  this.categoryName = this.category.category;
+  next();
 });
 
 productSchema?.pre("save", function (next) {

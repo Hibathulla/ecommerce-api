@@ -106,10 +106,6 @@ export const GetAll = (Model: Model<any>, type: string, searchKey?: string) =>
     let filter = {};
 
     if (req.params.productId) filter = { product: req.params.productId };
-    if (req.query.category)
-      filter = { ["category.category"]: req.query.category };
-
-    console.log(filter, "filt");
 
     let features = new APIFeatures(Model.find(filter), req.query, searchKey)
       .search()
@@ -117,8 +113,6 @@ export const GetAll = (Model: Model<any>, type: string, searchKey?: string) =>
       .pagination()
       .filter()
       .limitFields();
-
-    // if (popOptions) query = query.populate(popOptions);
 
     const doc = await features.query;
 

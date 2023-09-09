@@ -8,6 +8,20 @@ export class APIFeatures {
     this.searchKey = searchKey;
   }
 
+  // category() {
+  //   if (this.queryString.category) {
+  //     const filtered = {
+  //       metadata: {
+  //         $elemMatch: {
+  //           "category.category": this.queryString.category,
+  //         },
+  //       },
+  //     };
+  //     this.query = this.query.find(filtered);
+  //   }
+  //   return this;
+  // }
+
   filter() {
     const queryObj = { ...this.queryString };
     const excludedFields = ["page", "sort", "limit", "fields", "search"];
@@ -41,6 +55,9 @@ export class APIFeatures {
 
       this.query = this.query.sort(sortBy);
     }
+    // else {
+    //   this.query = this.query.sort({ createdAt: -1 });
+    // }
     return this;
   }
 
