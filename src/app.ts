@@ -15,8 +15,10 @@ import userRouter from "./routes/userRoutes";
 import sizeRouter from "./routes/sizeRoutes";
 import reviewRouter from "./routes/reviewRoutes";
 import couponRouter from "./routes/couponRoutes";
+import paymentRouter from "./routes/paymentRoutes";
 import locationRouter from "./routes/locationRoutes";
 import settingsRouter from "./routes/settingsRoutes";
+import orderRouter from "./routes/orderRoutes";
 dotenv.config();
 export const app = express();
 
@@ -66,6 +68,8 @@ app.use("/api/coupon", couponRouter);
 app.use("/api/image", imageRouter);
 app.use("/api/location", locationRouter);
 app.use("/api/settings", settingsRouter);
+app.use("/api/payment", paymentRouter);
+app.use("/api/order", orderRouter);
 
 app.use(GlobalError);
 // app.get("/", (req: Request, res: Response) => {

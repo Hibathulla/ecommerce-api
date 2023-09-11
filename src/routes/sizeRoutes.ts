@@ -11,9 +11,11 @@ import { upload } from "../utils/multer";
 
 const router = express();
 
+router.route("/").get(getAllSizes);
+
 router.use(protectRoute);
 
-router.route("/").get(getAllSizes).post(restrictTo("admin"), createSize);
+router.route("/").post(restrictTo("admin"), createSize);
 
 router
   .route("/:id")

@@ -102,10 +102,11 @@ export const GetOne = (
   });
 
 export const GetAll = (Model: Model<any>, type: string, searchKey?: string) =>
-  CatchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  CatchAsync(async (req: NewRequest, res: Response, next: NextFunction) => {
     let filter = {};
 
     if (req.params.productId) filter = { product: req.params.productId };
+    if (req.user) filter = { user: req.user._id };
 
     let features = new APIFeatures(Model.find(filter), req.query, searchKey)
       .search()

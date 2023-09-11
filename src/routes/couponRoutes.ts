@@ -12,9 +12,11 @@ import { upload } from "../utils/multer";
 
 const router = express();
 
+router.route("/").get(getAllCoupons);
+
 router.use(protectRoute);
 
-router.route("/").get(getAllCoupons).post(restrictTo("admin"), createCoupon);
+router.route("/").post(restrictTo("admin"), createCoupon);
 
 router.post("/verify-coupon", verifyCoupon);
 
