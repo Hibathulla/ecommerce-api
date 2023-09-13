@@ -39,9 +39,8 @@ export const paymentVerification = CatchAsync(
     if (signatureIsValid) {
       let datas = { ...req.body };
       delete datas?.razorpaySignature;
-      const orderData = (
-        await Order.create({ ...datas, user: req?.user?._id })
-      ).populate("user");
+      const orderData = await Order.create({ ...datas, user: req?.user?._id });
+      // .populate("user");
 
       res.status(201).json({
         status: "success",

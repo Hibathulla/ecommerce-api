@@ -25,6 +25,7 @@ const orderSchema = new mongoose.Schema(
     discount: Number,
     products: [
       {
+        name: String,
         category: String,
         size: String,
         id: mongoose.Schema?.Types?.ObjectId,
