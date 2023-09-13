@@ -41,17 +41,9 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
-orderSchema.pre(/^find/, function (next) {
-  (this as any)
-    .populate({
-      path: "user",
-      select: "name photo",
-    })
-    .populate({
-      path: "products",
-    });
+// orderSchema.pre(/^findById/, function (next) {
 
-  next();
-});
+//   next();
+// });
 
 export const Order = mongoose.model("Order", orderSchema);
