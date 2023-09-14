@@ -9,9 +9,12 @@ const mongoose_1 = __importDefault(require("mongoose"));
 // const mongoose: Mongoose = require("mongoose");
 const app_1 = require("./app");
 //mongoose connect
-const DB = process.env.DATABASE?.replace("<PASSWORD>", process.env.MONGO_PASSWORD);
+// const DB: any = process.env.DATABASE?.replace(
+//   "<PASSWORD>",
+//   process.env.MONGO_PASSWORD as any
+// );
 mongoose_1.default
-    .connect(DB)
+    .connect(process.env.DATABASE)
     .then(() => {
     console.log("DB connection is successfull");
 })

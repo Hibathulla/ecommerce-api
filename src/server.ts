@@ -5,13 +5,13 @@ import mongoose, { Mongoose } from "mongoose";
 import { app } from "./app";
 
 //mongoose connect
-const DB: any = process.env.DATABASE?.replace(
-  "<PASSWORD>",
-  process.env.MONGO_PASSWORD as any
-);
+// const DB: any = process.env.DATABASE?.replace(
+//   "<PASSWORD>",
+//   process.env.MONGO_PASSWORD as any
+// );
 
 mongoose
-  .connect(DB)
+  .connect(process.env.DATABASE!)
   .then(() => {
     console.log("DB connection is successfull");
   })
