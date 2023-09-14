@@ -18,7 +18,7 @@ mongoose_1.default
     .catch((err) => console.log("Error connecting to database...💥"));
 // 4) start the server
 const port = process.env.PORT || 3001;
-const server = app_1.app.listen(port, () => {
+const server = app_1.app.listen(port, "0.0.0.0", () => {
     console.log(`App running on port ${port}`);
 });
 process.on("unhandledRejection", (err) => {
