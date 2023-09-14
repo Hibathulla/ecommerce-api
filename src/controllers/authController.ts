@@ -68,7 +68,7 @@ export const login = CatchAsync(
       return next(new AppError("Invalid email or password", 400));
     }
 
-    generateToken(res, user);
+    generateToken(res, user, "Successfully logged in");
   }
 );
 
@@ -123,8 +123,6 @@ export const protectRoute = CatchAsync(
 
 export const restrictTo = (...roles: string[]) => {
   return (req: NewRequest, res: Response, next: NextFunction) => {
-    console.log(roles, req.user as any);
-
     if (!roles.includes(req?.user?.role as string)) {
       return next(
         new AppError("You do not have permission to perform this action!", 403)
@@ -148,7 +146,7 @@ export const updatePassword = CatchAsync(
     );
 
     if (!passwordIsCorrect) {
-      return next(new AppError("Your current password is wrong", 401));
+      return next(new AppError("Your current password is wrong", 403));
     }
 
     user!.password = req.body.password;

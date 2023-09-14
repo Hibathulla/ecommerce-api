@@ -4,6 +4,7 @@ import { NewRequest } from "../types/newRequest";
 import { CatchAsync } from "../utils/CatchAsync";
 import { AppError } from "../utils/AppError";
 import { UserDocumentWithId } from "../types/userTypes";
+import { GetAll, GetOne, UpdateOne } from "./handlerFactory";
 
 const filterObj = (obj: UserDocumentWithId, ...allowedFields: string[]) => {
   let newObj = {};
@@ -17,18 +18,7 @@ const filterObj = (obj: UserDocumentWithId, ...allowedFields: string[]) => {
   return newObj;
 };
 
-export const getAllUsers = CatchAsync(
-  async (req: NewRequest, res: Response, next: NextFunction) => {
-    const users = await User.findOne();
-
-    res.status(200).json({
-      status: "success",
-      data: {
-        users,
-      },
-    });
-  }
-);
+export const getAllUsers = GetAll(User, "user", "name");
 
 export const updateLoggedUser = CatchAsync(
   async (req: NewRequest, res: Response, next: NextFunction) => {
@@ -40,8 +30,16 @@ export const updateLoggedUser = CatchAsync(
       );
     }
 
+    // if (req.body.photo) {
+    //   return next(
+    //     new AppError("You cannot update password with this route", 400)
+    //   );
+    // }
+
     //* can only edit name and email
-    const filteredBody = filterObj(req.body, "name", "email");
+    const filteredBody = filterObj(req.body, "name", "email", "photo");
+
+    // console.log(filteredBody, "filtered");
 
     const updatedUser = await User.findByIdAndUpdate(
       req.user!._id,
@@ -54,9 +52,22 @@ export const updateLoggedUser = CatchAsync(
 
     res.status(200).json({
       status: "success",
+      message: "User updated successfully",
       data: {
         user: updatedUser,
       },
     });
   }
 );
+
+export const getMe = (req: NewRequest, res: Response, next: NextFunction) => {
+  req.params.id = req.user!._id;
+  console.log(req.params.id, "param");
+  console.log(req.user!._id, "id");
+
+  next();
+};
+
+export const UpdateUser = UpdateOne(User, "user");
+
+export const getUser = GetOne(User, "user");

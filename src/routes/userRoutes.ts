@@ -1,24 +1,35 @@
 import express from "express";
+import multer from "multer";
 import {
-  signUp,
   login,
+  protectRoute,
   restrictTo,
+  signUp,
   updatePassword,
 } from "../controllers/authController";
-import { getAllUsers, updateLoggedUser } from "../controllers/userController";
-import { protectRoute } from "../controllers/authController";
+import {
+  UpdateUser,
+  getAllUsers,
+  getMe,
+  getUser,
+  updateLoggedUser,
+} from "../controllers/userController";
 
 const router = express.Router();
 
-router.post("/signUp", signUp);
+router.post("/register", signUp);
 router.post("/login", login);
 
-router.route("/users").get(getAllUsers);
+router.use(protectRoute);
+router.patch("/updateMe", updateLoggedUser);
+router.route("/me").get(getMe, getUser);
 
+router.route("/").get(restrictTo("admin"), getAllUsers);
 router
-  .route("/updatePassword")
-  .post(protectRoute, restrictTo("user"), updatePassword);
+  .route("/:id")
+  .get(restrictTo("admin"), getUser)
+  .patch(restrictTo("admin"), UpdateUser);
 
-router.patch("/updateMe", protectRoute, updateLoggedUser);
+router.route("/updatePassword").post(restrictTo("user"), updatePassword);
 
 export default router;

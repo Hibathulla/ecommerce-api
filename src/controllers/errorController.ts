@@ -51,6 +51,7 @@ export const GlobalError = (err: any, req, res, next) => {
 
     if (err.code === 11000) error = HandleDuplicateFieldsDB(err);
     if (err.name === "JsonWebTokenError") error = HandleJWTErrorDB(err);
+    if (err.name === "CastError") error = HandleCastErrorDB(err);
     if (err.name === "TokenExpiredError")
       error = HandleTokenExpiredErrorDB(err);
 
