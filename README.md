@@ -4,6 +4,8 @@ This full E-Commerce API build using Express and Mongo. Here it contains all the
 ## Features
 - Authentication and authorization using JSON Web Tokens(JWT). protection of routes and authorizing specific users to access specific endpoints.
 - Payments handled using razorpay.
+- Mongoose aggregation.
+- Mongoose population.
 - Implemented rate limiting.
 - Implemented Api limit of 1000 requests.
 - Sanitized the incoming JSON request to handle from threats.
