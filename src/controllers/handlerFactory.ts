@@ -106,7 +106,7 @@ export const GetAll = (Model: Model<any>, type: string, searchKey?: string) =>
     let filter = {};
 
     if (req.params.productId) filter = { product: req.params.productId };
-    if (req.user) filter = { user: req.user._id };
+    if (req.params?.userId) filter = { user: req.params.userId };
 
     let features = new APIFeatures(Model.find(filter), req.query, searchKey)
       .search()
