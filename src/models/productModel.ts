@@ -29,10 +29,7 @@ const productSchema = new mongoose.Schema<productType>(
     },
     slug: String,
     images: [String],
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
-    },
+    category: String,
     size: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -45,7 +42,6 @@ const productSchema = new mongoose.Schema<productType>(
       type: Date,
       default: Date.now(),
     },
-    categoryName: String,
   },
   {
     toJSON: { virtuals: true },
@@ -68,10 +64,6 @@ const productSchema = new mongoose.Schema<productType>(
 // });
 
 // virtual properties
-productSchema.pre("save", function (next) {
-  this.categoryName = this.category.category;
-  next();
-});
 
 productSchema?.pre("save", function (next) {
   this.slug = slugify(this?.name, { lower: true, trim: true });
