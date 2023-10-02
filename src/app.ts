@@ -45,7 +45,7 @@ if (process.env.NODE_ENV === "development") {
 
 app.get("/hi", (req, res) => {
   res.status(200).json({
-    message: "hello",
+    message: "hello user",
   });
 });
 
