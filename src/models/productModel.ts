@@ -72,7 +72,7 @@ productSchema?.pre("save", function (next) {
 
 productSchema?.pre(/^find/, function (next) {
   (this as any).populate({
-    path: "size category",
+    path: "size",
     select: "category billboard billboardLabel name value",
   });
   next();
