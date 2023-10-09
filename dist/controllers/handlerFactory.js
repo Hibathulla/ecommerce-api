@@ -79,8 +79,8 @@ const GetAll = (Model, type, searchKey) => (0, CatchAsync_1.CatchAsync)(async (r
     let filter = {};
     if (req.params.productId)
         filter = { product: req.params.productId };
-    if (req.user)
-        filter = { user: req.user._id };
+    if (req.params?.userId)
+        filter = { user: req.params.userId };
     let features = new ApiFeatures_1.APIFeatures(Model.find(filter), req.query, searchKey)
         .search()
         .sort()

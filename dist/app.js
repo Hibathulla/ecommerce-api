@@ -44,7 +44,7 @@ if (process.env.NODE_ENV === "development") {
 }
 exports.app.get("/hi", (req, res) => {
     res.status(200).json({
-        message: "hello",
+        message: "hello user",
     });
 });
 const limiter = (0, express_rate_limit_1.default)({
