@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUser = exports.UpdateUser = exports.getMe = exports.updateLoggedUser = exports.getAllUsers = void 0;
+exports.getUserStats = exports.getUser = exports.UpdateUser = exports.getMe = exports.updateLoggedUser = exports.getAllUsers = void 0;
 const userModel_1 = require("../models/userModel");
 const CatchAsync_1 = require("../utils/CatchAsync");
 const AppError_1 = require("../utils/AppError");
@@ -50,4 +50,33 @@ const getMe = (req, res, next) => {
 exports.getMe = getMe;
 exports.UpdateUser = (0, handlerFactory_1.UpdateOne)(userModel_1.User, "user");
 exports.getUser = (0, handlerFactory_1.GetOne)(userModel_1.User, "user");
+exports.getUserStats = (0, CatchAsync_1.CatchAsync)(async (req, res, next) => {
+    const stats = await userModel_1.User.aggregate([
+        // {
+        //   $match: { ratingsAverage: { $gte: 4.5 } }, // filter or selects only certain documents
+        // },
+        {
+            $group: {
+                _id: null,
+                totalUsers: { $sum: 1 },
+                //   avgRating: { $avg: "$ratingsAverage" }, //given a name as avgRating and calculated avg using $avg for ratingsAverageField
+                //   avgPrice: { $avg: "$price" },
+                //   minPrice: { $min: "$price" }, //calculated minimum price using $min
+                //   maxPrice: { $max: "$price" }, //calculated maximum price using $min
+            },
+        },
+        //   {
+        //     $sort: {
+        //       avgPrice: 1,
+        //     },
+        //   },
+        // {
+        //   $match: { _id: { $ne: 'easy' } }, // our new _ids s is easy, medium, difficult where we defined in $group. here we select _id != easy
+        // },
+    ]);
+    res.status(200).json({
+        status: "success",
+        data: stats,
+    });
+});
 //# sourceMappingURL=userController.js.map

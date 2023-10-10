@@ -4,6 +4,7 @@ import {
   deleteProduct,
   getAllProducts,
   getProduct,
+  getProductStats,
   updateProduct,
 } from "../controllers/ProductController";
 import { protectRoute, restrictTo } from "../controllers/authController";
@@ -13,6 +14,8 @@ import reviewRouter from "../routes/reviewRoutes";
 const router = express();
 
 router.use("/:productId/review", reviewRouter);
+
+router.get("/stats", getProductStats);
 
 // router
 //   .route("/:productId/review")

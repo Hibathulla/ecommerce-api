@@ -9,6 +9,7 @@ const authController_1 = require("../controllers/authController");
 const reviewRoutes_1 = __importDefault(require("../routes/reviewRoutes"));
 const router = (0, express_1.default)();
 router.use("/:productId/review", reviewRoutes_1.default);
+router.get("/stats", ProductController_1.getProductStats);
 // router
 //   .route("/:productId/review")
 //   .get()

@@ -71,3 +71,36 @@ export const getMe = (req: NewRequest, res: Response, next: NextFunction) => {
 export const UpdateUser = UpdateOne(User, "user");
 
 export const getUser = GetOne(User, "user");
+
+export const getUserStats = CatchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const stats = await User.aggregate([
+      // {
+      //   $match: { ratingsAverage: { $gte: 4.5 } }, // filter or selects only certain documents
+      // },
+      {
+        $group: {
+          _id: null, // selects all docs if no id given
+          totalUsers: { $sum: 1 },
+
+          //   avgRating: { $avg: "$ratingsAverage" }, //given a name as avgRating and calculated avg using $avg for ratingsAverageField
+          //   avgPrice: { $avg: "$price" },
+          //   minPrice: { $min: "$price" }, //calculated minimum price using $min
+          //   maxPrice: { $max: "$price" }, //calculated maximum price using $min
+        },
+      },
+      //   {
+      //     $sort: {
+      //       avgPrice: 1,
+      //     },
+      //   },
+      // {
+      //   $match: { _id: { $ne: 'easy' } }, // our new _ids s is easy, medium, difficult where we defined in $group. here we select _id != easy
+      // },
+    ]);
+    res.status(200).json({
+      status: "success",
+      data: stats,
+    });
+  }
+);

@@ -9,6 +9,7 @@ const userController_1 = require("../controllers/userController");
 const orderRoutes_1 = __importDefault(require("../routes/orderRoutes"));
 const router = express_1.default.Router();
 router.use("/:userId/order", orderRoutes_1.default);
+router.get("/stats", userController_1.getUserStats);
 router.post("/register", authController_1.signUp);
 router.post("/login", authController_1.login);
 router.use(authController_1.protectRoute);

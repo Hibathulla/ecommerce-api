@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const authController_1 = require("../controllers/authController");
 const orderController_1 = require("../controllers/orderController");
 const router = express_1.default.Router({ mergeParams: true });
+router.route("/stats").get(orderController_1.getOrderStats);
 router.route("/").get(authController_1.protectRoute, orderController_1.getAllOrders);
 router.route("/").post(authController_1.protectRoute, orderController_1.createOrder);
 router

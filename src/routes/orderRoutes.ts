@@ -5,10 +5,13 @@ import {
   createOrder,
   getAllOrders,
   getOrder,
+  getOrderStats,
   updateOrder,
 } from "../controllers/orderController";
 
 const router = express.Router({ mergeParams: true });
+
+router.route("/stats").get(getOrderStats);
 
 router.route("/").get(protectRoute, getAllOrders);
 router.route("/").post(protectRoute, createOrder);

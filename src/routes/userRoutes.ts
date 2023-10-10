@@ -12,6 +12,7 @@ import {
   getAllUsers,
   getMe,
   getUser,
+  getUserStats,
   updateLoggedUser,
 } from "../controllers/userController";
 import orderRouter from "../routes/orderRoutes";
@@ -20,10 +21,13 @@ const router = express.Router();
 
 router.use("/:userId/order", orderRouter);
 
+router.get("/stats", getUserStats);
+
 router.post("/register", signUp);
 router.post("/login", login);
 
 router.use(protectRoute);
+
 router.patch("/updateMe", updateLoggedUser);
 router.route("/me").get(getMe, getUser);
 
