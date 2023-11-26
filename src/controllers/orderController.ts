@@ -1,7 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import { Order } from "../models/orderModel";
 import { CatchAsync } from "../utils/CatchAsync";
-import { CreateOne, GetAll, GetOne, UpdateOne } from "./handlerFactory";
+import {
+  CreateOne,
+  GetAll,
+  GetOne,
+  UpdateOne,
+  DeleteOne,
+} from "./handlerFactory";
 
 export const getAllOrders = GetAll(Order, "order", "name");
 export const createOrder = CreateOne(Order, "order");
@@ -9,6 +15,7 @@ export const createOrder = CreateOne(Order, "order");
 export const getOrder = GetOne(Order, "order", { path: "user" });
 
 export const updateOrder = UpdateOne(Order, "order");
+export const deleteOrder = DeleteOne(Order, "order");
 
 export const getOrderStats = CatchAsync(
   async (req: Request, res: Response, next: NextFunction) => {

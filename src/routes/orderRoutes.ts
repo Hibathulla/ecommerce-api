@@ -3,6 +3,7 @@ import express from "express";
 import { protectRoute, restrictTo } from "../controllers/authController";
 import {
   createOrder,
+  deleteOrder,
   getAllOrders,
   getOrder,
   getOrderStats,
@@ -18,6 +19,7 @@ router.route("/").post(protectRoute, createOrder);
 router
   .route("/:id")
   .get(protectRoute, getOrder)
-  .patch(protectRoute, restrictTo("admin"), updateOrder);
+  .patch(protectRoute, restrictTo("admin"), updateOrder)
+  .delete(protectRoute, restrictTo("admin"), deleteOrder);
 
 export default router;

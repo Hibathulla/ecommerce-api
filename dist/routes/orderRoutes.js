@@ -13,6 +13,7 @@ router.route("/").post(authController_1.protectRoute, orderController_1.createOr
 router
     .route("/:id")
     .get(authController_1.protectRoute, orderController_1.getOrder)
-    .patch(authController_1.protectRoute, (0, authController_1.restrictTo)("admin"), orderController_1.updateOrder);
+    .patch(authController_1.protectRoute, (0, authController_1.restrictTo)("admin"), orderController_1.updateOrder)
+    .delete(authController_1.protectRoute, (0, authController_1.restrictTo)("admin"), orderController_1.deleteOrder);
 exports.default = router;
 //# sourceMappingURL=orderRoutes.js.map

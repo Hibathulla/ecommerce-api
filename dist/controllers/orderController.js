@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOrderStats = exports.updateOrder = exports.getOrder = exports.createOrder = exports.getAllOrders = void 0;
+exports.getOrderStats = exports.deleteOrder = exports.updateOrder = exports.getOrder = exports.createOrder = exports.getAllOrders = void 0;
 const orderModel_1 = require("../models/orderModel");
 const CatchAsync_1 = require("../utils/CatchAsync");
 const handlerFactory_1 = require("./handlerFactory");
@@ -8,6 +8,7 @@ exports.getAllOrders = (0, handlerFactory_1.GetAll)(orderModel_1.Order, "order",
 exports.createOrder = (0, handlerFactory_1.CreateOne)(orderModel_1.Order, "order");
 exports.getOrder = (0, handlerFactory_1.GetOne)(orderModel_1.Order, "order", { path: "user" });
 exports.updateOrder = (0, handlerFactory_1.UpdateOne)(orderModel_1.Order, "order");
+exports.deleteOrder = (0, handlerFactory_1.DeleteOne)(orderModel_1.Order, "order");
 exports.getOrderStats = (0, CatchAsync_1.CatchAsync)(async (req, res, next) => {
     const stats = await orderModel_1.Order.aggregate([
         // {
